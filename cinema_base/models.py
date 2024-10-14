@@ -85,6 +85,23 @@ from django.utils.version import version_component_re
 #     def get_discount(self):
 #         return self.price - (self.price * 0.1)
 
+#import modelsProject; from cinema_base.models import *; from datetime import timedelta
+
+genders = [
+    ('male', 'male'),
+    ('female', 'female')
+]
+
+ages = [
+    ('G', 'General Audiences'),
+    ('PG', 'Parental Guldence Suggested'),
+    ('PG', 'Parental Guldence Suggested'),
+    ('PG-13', 'Parents Strongly Caoutioned'),
+    ('R', 'Restricted'),
+    ('NC-17', 'Adults Only'),
+    ('NONE', 'None Information')
+]
+
 class Genre(models.Model):
     name = models.CharField(verbose_name='Жанр', max_length=255)
     description = models.TextField(verbose_name='Описание', blank=True)
@@ -112,6 +129,7 @@ class Actor(models.Model):
     first_name = models.CharField('Имя', max_length=50)
     surname = models.CharField('Фамилия', max_length=50)
     birth_date = models.DateField('Дата рождения', default='1900-01-01')
+    gender = models.CharField(max_length=6, choices=genders, default='None')
 
     class Meta:
         verbose_name = 'Актёр'
@@ -120,6 +138,9 @@ class Actor(models.Model):
 
     def __str__(self):
         return f'{self.first_name} {self.surname}' #{self.patronymic}'
+
+    def getinfo(self):
+        return f'{self.first_name} {self.surname}, {self.gender}'
 
 class Film(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
@@ -133,19 +154,10 @@ class Film(models.Model):
     female_actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name='female_actor', blank=True, null=True)
     rating = models.PositiveIntegerField(verbose_name='Оценка', validators=[MaxValueValidator(100)], default=0)
     duration = models.DurationField(verbose_name='Длительность', null=True, blank=True)
-    ages = [
-        ('G' , 'General Audiences'),
-        ('PG' , 'Parental Guldence Suggested'),
-        ('PG' , 'Parental Guldence Suggested'),
-        ('PG-13' , 'Parents Strongly Caoutioned'),
-        ('R' , 'Restricted'),
-        ('NC-17' , 'Adults Only'),
-        ('NONE', 'None Information')
-    ]
     age = models.CharField(
         max_length=5,
         choices=ages,
-        default='NONE',
+        default='None',
     )
 
     class Meta:
@@ -157,10 +169,20 @@ class Film(models.Model):
         return self.title
 
     def rating100to10(self):
-        return round(self.rating / 10, 1)
+        return f'rate new: {round(self.rating / 10, 1)}'
 
     def rating100to5(self):
         return self.rating // 25
+
+    def getgenres(self):
+        # return  (*self.genres.all())
+        return ', '.join(self.genres.values_list('name', flat=True))
+
+    def getinfo(self):
+        return (f'\nНазвание: {self.title:<20} Дата выхода: {str(self.release):<20} Жанры: {self.getgenres():<20} '
+                f'\nСлоган: {str(self.slogan):<100} \nСтудия: {str(self.studio):<20} '
+                f'\nГлавные актёры: {str(self.male_actor):<20} {str(self.female_actor):<20} '
+                f'\nОценка: {self.rating:<20} Длительность: {str(self.duration):<20} Рейтинг: {self.age:<20} \n')
 
 class Director(models.Model):
     first_name = models.CharField('Имя', max_length=50)
