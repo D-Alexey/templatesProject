@@ -17,6 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from cinema_base import views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('first_view/', views.FirstView.as_view(), name='first_view'),
+    # path('films/', views.FilmsListTemplateView.as_view(), name='list_view'),
+    # path('films_list/', views.FilmsList.as_view(), name='films_list'),
+    path('films/', views.FilmsList.as_view(), name='films_list'),
+    path('gosling/', views.GoslingFilms.as_view(), name='gosling_films'),
+    path('films/<int:pk>/', views.FilmDetail.as_view(), name='film_detail'),
+    path('film_create/', views.FilmCreate.as_view(), name='film_create'),
+    path('films/<int:pk>/update/', views.FilmsUpdate.as_view(), name='film_update'),
+    path('films/<int:pk>/delete/', views.FilmsDelete.as_view(), name='film_delete'),
 ]

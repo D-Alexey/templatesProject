@@ -145,7 +145,7 @@ class Actor(models.Model):
 class Film(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
     # poster постер
-    poster = models.ImageField(upload_to='images', default='media/poster_none.jpg')
+    poster = models.ImageField(upload_to='media/images', default='media/images/poster_none.jpg')
     release = models.DateField('Дата выхода', default='1900-01-01')
     genres = models.ManyToManyField(Genre, verbose_name='Жанры', related_name='films', blank=True)
     studio = models.ForeignKey(Studio, verbose_name='Студия', blank=True, null=True, related_name='studio', on_delete=models.SET_NULL)
