@@ -1,0 +1,152 @@
+@font-face {
+    font-family: Heebo;
+    src: "./fonts/Heeb0-Bold.woff2" format('woff2');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+:root {
+    --color-sandy: #e7d28e;
+    --color-dark: #1a1a1a;
+    --color-light: #999999;
+    
+    --border-radius: 6px;
+    --border: 3px solid var(--color-sandy);
+    font-family: var('Heebo');
+}
+
+a, a:visited, a:active {
+    color: inherit;
+    }
+
+body {
+    background-color: var(--color-dark);
+}
+
+button {
+    color: var(--color-dark);
+    letter-spacing: 5px;
+    font-weight: 600;
+}
+
+img {
+    max-height: 340px;
+    max-width: 200px;
+    overflow: hidden;
+}
+
+.container {
+    gap: 50px;
+    margin: 20px;
+}
+
+.film-body {
+    color: var(--color-light);
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+    background-color: var(--color-dark);
+    border: 5px solid var(--color-sandy);
+    border-radius: 6px;
+    position: relative;
+}
+
+.film-info {
+    margin-left: 20px;
+}
+
+.title {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: xx-large;
+    color: var(--color-light);
+    float: left;
+}
+
+.button-add-film {
+    height: 80px;
+    width: 130px;
+    color: var(--color-dark);
+    background-color: var(--color-light);
+    border: 3px solid var(--color-sandy);
+    border-radius: 6px;
+    float: right;
+}
+
+.top-line {
+    padding-bottom: 100px;
+}
+
+.rating {
+    float: right;
+    color: var(--color-sandy);
+}
+
+.container-buttons {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    right: -20%;
+
+
+    /* right: 0;
+    bottom: 0;
+    padding: 3px;
+    gap: 19px; */
+    border-radius: 6px;
+    color: var(--color-dark);
+    background-color: var(--color-sandy);
+}
+
+.container-buttons > div {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 1px;
+    font-size: medium;
+    padding: 2px;
+    margin: 6px auto;
+}
+
+.away-link {
+    margin-bottom: 30px;
+}
+
+.container-update {
+    margin: auto;
+    margin-left: 20px;
+    width: 50%;
+    color: var(--color-sandy);
+}
+
+.cancel {
+    align-items: center;
+    text-align: center;
+}
+
+.update-body {
+    border: none;
+}
+
+.detail {
+    margin-left: 500px;
+}
+
+.main-page {
+    margin: auto;
+    text-align: center;
+    background-color: var(--color-sandy);
+}
+
+.genres {
+    display: flex;
+    flex-direction: row;
+}
+
+.searchy > p {
+    color: var(--color-sandy);
+    background-color: red;
+    font-size: large;
+}
+
