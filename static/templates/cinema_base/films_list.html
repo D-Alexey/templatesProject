@@ -2,33 +2,31 @@
 {% load static %}
 {% block title %} Фильмы {% endblock %}
 
-{% block sidebar %}
-{% load static %}
-  <div>
-    <div class="film-body">
+<div class="top-line">
+  <h1 class="title">Фильмы</h1>
+  <form action="{% url 'film_create' %}">
+    <button type="submit" class="button-add-film">Добавить фильм</button>
+  </form>
+</div>
+<div class="main-container">  
+  {% block sidebar %}
+  {% load static %}
       <form method="get">
+        <div class="film-body search">
         {% csrf_token %}
         {% for field in filter.form %}
-          <div class="searchy">{{ field.label_tag }}
-            <p style="color: var(--color-sandy);
-    background-color: var(--color-dark);"> {{field}} </p>
+          <div class="searchy">
+            {{ field.label_tag }}
+            <p style="color: var(--color-sandy); background-color: var(--color-dark);"> {{field}} </p>
           </div>
         {% endfor %}
         <a href="{% url 'films_list' %}"} > Сбросить </a>
         <button type="submit">Поиск</button>
+      </div>
       </form>
-    </div>
-  </div>
-{% endblock %}
+  {% endblock %}
 
-{% block content %}
-  <div class="top-line">
-    <h1 class="title">Фильмы</h1>
-    <form action="{% url 'film_create' %}">
-      <button type="submit" class="button-add-film">Добавить фильм</button>
-    </form>
-  </div>
-
+  {% block content %}
     <div class="container">
       {% for film in films %}
         <div class="film-body">
@@ -52,4 +50,5 @@
         </div>
       {% endfor %}
     </div>
-{% endblock %}
+  {% endblock %}
+</div>

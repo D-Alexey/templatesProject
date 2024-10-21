@@ -150,3 +150,11 @@ img {
     font-size: large;
 }
 
+.main-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.search {
+    width: fit-content;
+}
