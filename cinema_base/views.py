@@ -10,6 +10,8 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
+from django_filters.views import FilterView
+from cinema_base import filters
 
 from cinema_base.models import Film
 
@@ -26,12 +28,16 @@ class FirstView(View):
 #         context['films'] = Film.objects.all()
 #         return context
 # 11 08 - views class List
-class FilmsList(ListView):
+# class FilmsList(ListView):
+#     template_name = 'cinema_base/films_list.html'
+#     model = Film
+#     context_object_name = 'films'
+
+class FilmsList(FilterView):
     template_name = 'cinema_base/films_list.html'
     model = Film
-    #model = Film.objects.filter(male_actor__surname="Гослинг")
-    #model = Film.objects.all()
     context_object_name = 'films'
+    filterset_class = filters.Film
 
 class GoslingFilms(ListView):
     template_name = 'cinema_base/gosling_films.html'

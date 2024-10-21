@@ -1,6 +1,26 @@
 {% extends '../base.html' %}
 {% load static %}
 {% block title %} Фильмы {% endblock %}
+
+{% block sidebar %}
+{% load static %}
+  <div>
+    <div class="film-body">
+      <form method="get">
+        {% csrf_token %}
+        {% for field in filter.form %}
+          <div class="searchy">{{ field.label_tag }}
+            <p style="color: var(--color-sandy);
+    background-color: var(--color-dark);"> {{field}} </p>
+          </div>
+        {% endfor %}
+        <a href="{% url 'films_list' %}"} > Сбросить </a>
+        <button type="submit">Поиск</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
+
 {% block content %}
   <div class="top-line">
     <h1 class="title">Фильмы</h1>
@@ -23,7 +43,12 @@
             <p>Длительность: {{ film.duration }} </p>
             <p>Возрастной рейтинг: {{ film.age }}</p>
             <p>id: {{ film.pk }}</p>
-          </div>
+          </div>      
+          <div class="container-buttons">
+            <div><a href="{% url 'film_update' film.pk%}">Редактировать</a></br></div>
+            <div><a href="{% url 'film_delete' film.pk%}">Удалить</a></br></div>
+            <div><a href="{% url 'films_list' %}">Назад</a></div>
+          </div> 
         </div>
       {% endfor %}
     </div>
