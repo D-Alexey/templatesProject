@@ -1,0 +1,12 @@
+{% extends '../base.html' %}
+{% block title %} Удалить {% endblock %}
+{% block content %}
+<div class="film-body">
+  <h1>Удалить {{ film.title }}</h1>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <button class="button-add-film" type="submit">Удалить</button>
+    <p class="cancel"><a href="{% url 'film_detail' film.pk %}">Отмена</a></p>
+  </form>
+</div>
+{% endblock %}
