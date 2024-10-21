@@ -1,3 +1,17 @@
+ДЗ 6
+![6](https://github.com/user-attachments/assets/13354d7a-cdc4-412b-80b6-13f9de8866d6)
+![5](https://github.com/user-attachments/assets/157b55a7-84e5-4bdf-8b6e-96d727410a27)
+![4](https://github.com/user-attachments/assets/1ac3d077-5f15-4087-b51c-ab766c46ff63)
+![3](https://github.com/user-attachments/assets/6d38173f-d427-4123-86e1-dcd6f3129d62)
+![2](https://github.com/user-attachments/assets/0ab65abd-bc86-4ffb-ba50-74ab7cd03801)
+![1](https://github.com/user-attachments/assets/4c939740-8d11-4727-98a5-f85d3edbd54e)
+![9](https://github.com/user-attachments/assets/7099cbb7-4c00-41d0-9e9d-124c872500eb)
+![8](https://github.com/user-attachments/assets/e79c716d-75ac-4053-87d4-8e001985b2e6)
+![7](https://github.com/user-attachments/assets/09a27f3f-1fea-4fa8-91bf-9be81752fc87)
+
+
+
+ДЗ 5
 ![values_list](https://github.com/user-attachments/assets/220846e2-65c6-4c98-8a82-280e05cd0e01)
 ![show_actors_filter_by_gender_order_by_surname](https://github.com/user-attachments/assets/28b67616-380a-4eb5-b875-e242fe0e6f1d)
 ![films_filter_by_male_and_female_actors](https://github.com/user-attachments/assets/311e324c-6c91-463a-b69d-dd83a1b13394)
