@@ -30,4 +30,9 @@ urlpatterns = [
     path('film_create/', views.FilmCreate.as_view(), name='film_create'),
     path('films/<int:pk>/update/', views.FilmsUpdate.as_view(), name='film_update'),
     path('films/<int:pk>/delete/', views.FilmsDelete.as_view(), name='film_delete'),
+    path('actors/', views.ActorsList.as_view(), name='actors_list'),
+    path('actor/<int:pk>/', views.ActorDetail.as_view(), name='actor_detail'),
+    path('actor_create/', views.ActorCreate.as_view(), name='actor_create'),
+    path('actors/<int:pk>/update/', views.ActorUpdate.as_view(), name='actor_update'),
+    path('actors/<int:pk>/delete/', views.ActorDelete.as_view(), name='actor_delete'),
 ]

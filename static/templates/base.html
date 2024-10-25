@@ -9,7 +9,7 @@
     <link type="text/css" href="{% static 'templates/styles.css' %}"  rel="stylesheet">
 </head>
 <body>
-    <p class="main-page"><a href="{% url 'films_list' %}">Главная</a> <a href="{% url 'gosling_films' %}">Фильмы с гослингом</a></p>
+    <p class="main-page"><a href="{% url 'films_list' %}">Главная</a> <a href="{% url 'actors_list' %}">Актеры</a> <a href="{% url 'gosling_films' %}">Фильмы с гослингом</a></p>
     <div class="container">
         {% block sidebar %}{% endblock %}
         {% block content %}

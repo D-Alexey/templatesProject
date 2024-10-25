@@ -126,10 +126,12 @@ class Studio(models.Model):
         return self.name
 
 class Actor(models.Model):
+    photo = models.ImageField(upload_to='media/images/peoples', default='/media/images/poster_none.jpg')
     first_name = models.CharField('Имя', max_length=50)
     surname = models.CharField('Фамилия', max_length=50)
     birth_date = models.DateField('Дата рождения', default='1900-01-01')
     gender = models.CharField(max_length=6, choices=genders, default='None')
+    #gender = models.CharField(max_length=6, default='None')
 
     class Meta:
         verbose_name = 'Актёр'
@@ -144,16 +146,24 @@ class Actor(models.Model):
 
 class Film(models.Model):
     title = models.CharField(verbose_name='Название', max_length=255)
-    # poster постер
-    poster = models.ImageField(upload_to='media/images', default='media/images/poster_none.jpg')
+    poster = models.ImageField(upload_to='media/images', default='/media/images/poster_none.jpg')
+    #poster = models.CharField(verbose_name='Постер', max_length=255, default='постер')
     release = models.DateField('Дата выхода', default='1900-01-01')
+    #release = models.CharField(verbose_name='Постер', max_length=255, default='дата')
     genres = models.ManyToManyField(Genre, verbose_name='Жанры', related_name='films', blank=True)
+    #genres = models.CharField(verbose_name='Жанры', max_length=255, default='женрес')
     studio = models.ForeignKey(Studio, verbose_name='Студия', blank=True, null=True, related_name='studio', on_delete=models.SET_NULL)
-    slogan = models.CharField(verbose_name='Слоган', max_length=255, blank=True, null=True)
-    male_actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name='male_actor', blank=True, null=True)
-    female_actor = models.ForeignKey(Actor, on_delete=models.CASCADE, related_name='female_actor', blank=True, null=True)
+    #studio = models.CharField(verbose_name='Студия', max_length=255, default='студия')
+    slogan = models.CharField(verbose_name='Слоган', max_length=255, blank=True, default='')
+    male_actor = models.ForeignKey(Actor, on_delete=models.SET_NULL, related_name='male_actor', blank=True, null=True)
+    #male_actor = models.CharField(verbose_name='Мужская роль', max_length=255, default='мэйл')
+    female_actor = models.ForeignKey(Actor, on_delete=models.SET_NULL, related_name='female_actor', blank=True, null=True)
+    #female_actor = models.CharField(verbose_name='Женская роль', max_length=255, default='фемэйл')
     rating = models.PositiveIntegerField(verbose_name='Оценка', validators=[MaxValueValidator(100)], default=0)
-    duration = models.DurationField(verbose_name='Длительность', null=True, blank=True)
+    #rating = models.CharField(verbose_name='Рейтинг', max_length=255, default='рейтинг')
+    duration = models.DurationField(verbose_name='Длительность', blank=True, default='00:00:00')
+    #duration = models.CharField(verbose_name='Длительность', max_length=255, default='длительность')
+    #age = models.CharField(max_length=20, default='возраст')
     age = models.CharField(
         max_length=5,
         choices=ages,
@@ -176,6 +186,7 @@ class Film(models.Model):
 
     def getgenres(self):
         # return  (*self.genres.all())
+        #return 'Функция гетженрес'
         return ', '.join(self.genres.values_list('name', flat=True))
 
     def getinfo(self):

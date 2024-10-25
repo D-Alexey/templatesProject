@@ -12,8 +12,10 @@ from django.views.generic import TemplateView, DetailView, UpdateView, DeleteVie
 from django.core.files.storage import FileSystemStorage
 from django_filters.views import FilterView
 from cinema_base import filters
+from django.db.models import Q
 
-from cinema_base.models import Film
+from cinema_base.models import Film, Studio, Actor
+
 
 # Create your views here.
 class FirstView(View):
@@ -50,6 +52,9 @@ class FilmDetail(DetailView):
     context_object_name = 'film'
 
 class FilmsUpdate(UpdateView):
+    def __init__(self):
+        super().__init__()
+        print('фильм апдейт')
     model = Film
     template_name = 'cinema_base/film_form.html'
     fields = ['title',
@@ -64,6 +69,12 @@ class FilmsUpdate(UpdateView):
               'duration',
               'age',
               'poster']
+    success_url = reverse_lazy('films_list')
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         return reverse_lazy('film_detail', kwargs={'pk': self.object.pk})
@@ -74,6 +85,8 @@ class FilmsDelete(DeleteView):
     success_url = reverse_lazy('films_list')
 
 class FilmCreate(CreateView):
+    def __init__(self):
+        super().__init__()
     model = Film
     template_name = 'cinema_base/film_create.html'
     success_url = reverse_lazy('films_list')
@@ -82,10 +95,61 @@ class FilmCreate(CreateView):
               'slogan',
               'genres',
               'studio',
-              'slogan',
               'male_actor',
               'female_actor',
               'rating',
               'duration',
               'age',
               'poster']
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy('films_list')
+
+class ActorsList(FilterView):
+    template_name = 'cinema_base/actors_list.html'
+    model = Actor
+    context_object_name = 'actors'
+    filterset_class = filters.Actor
+
+class ActorDetail(DetailView):
+    template_name = 'cinema_base/actor_detail.html'
+    model = Actor
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['films'] = Film.objects.filter(Q(female_actor__id=self.object.pk) | Q(male_actor__id=self.object.pk))
+        print(self.object.pk)
+        return context
+
+class ActorCreate(CreateView):
+    model = Actor
+    template_name = 'cinema_base/actor_create.html'
+    success_url = reverse_lazy('actors_list')
+    fields = [
+        'photo',
+        'first_name',
+        'surname',
+        'birth_date',
+        'gender'
+    ]
+
+class ActorUpdate(UpdateView):
+    model = Actor
+    template_name = 'cinema_base/actor_form.html'
+    fields = [
+        'photo',
+        'first_name',
+        'surname',
+        'birth_date',
+        'gender'
+    ]
+    success_url = reverse_lazy('actors_list')
+
+class ActorDelete(DeleteView):
+    model = Actor
+    template_name = 'cinema_base/actor_confirm_delete.html'
+    success_url = reverse_lazy('actors_list')

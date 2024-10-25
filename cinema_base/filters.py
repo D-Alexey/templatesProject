@@ -1,7 +1,11 @@
+from random import choice
+
 import django_filters
+from django.forms import ChoiceField
+
 import cinema_base.models
 from django.db.models import Q
-from cinema_base.models import Genre, ages
+from cinema_base.models import Genre, ages, genders
 from datetime import datetime, date, time
 
 QUALITY = [
@@ -9,6 +13,13 @@ QUALITY = [
     ('Average_rating', 'Средняя'),
     ('Low_rating', 'Низкая')
 ]
+
+class Actor(django_filters.FilterSet):
+    #actor = django_filters.CharFilter(method='actor_filter', label='Актер')
+    first_name = django_filters.CharFilter(lookup_expr='iregex', label='Имя')
+    surname = django_filters.CharFilter(lookup_expr='iregex', label='Фамилия')
+    year = django_filters.RangeFilter(field_name='birth_date__year', label='Год рождения от и до')
+    gender = django_filters.ChoiceFilter(choices=genders, field_name='gender', label='Пол')
 
 class Film(django_filters.FilterSet):
     rating_range = django_filters.RangeFilter(field_name='rating', label='Рейтинг от и до')

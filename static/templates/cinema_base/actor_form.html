@@ -1,0 +1,34 @@
+{% extends '../base.html' %}
+{% block title %} Редактировать {% endblock %}
+{% block content %}
+{% load static %}
+  <form method="POST" enctype="multipart/form-data">
+    <div class="top-line">
+      <h1 class="title">Редактировать</h1>
+      <div class="container-buttons ">
+        <button class="button-add-film" type="submit">Сохранить изменения</button>
+        <p><a class="cancel" href="{% url 'actors_list' %}">Отмена</a></p>
+      </div>
+    </div>
+
+  <div class="film-body update-body">
+    <img src="{% static actor.photo %}" alt="photo">
+    <div class="container-update">
+      <div>
+            {% csrf_token %}
+            {% for field in form %}
+              <div class="form-group">
+                  {{field.label_tag}}
+                  <div>{{field}}</div>
+                  {% if field.errors%}
+                  {% for error in field.errors %}
+                    <div> {{error}} </div>
+                  {% endfor %}
+                  {% endif %}
+              </div>
+              {% endfor %}
+        </div>
+    </div>
+  </div>
+</form>
+{% endblock %}

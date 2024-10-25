@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 
 MEDIA_URL = '/media/'
 
-MEDIA_ROOT = 'E:/ITCODE/ITCODE_BACK/modelsProject/static/media/'
+MEDIA_ROOT = 'E:/ITCODE/ITCODE_BACK/modelsProject/static/'
 
 
 #STATIC_ROOT = os.path.join(BASE_DIR, "mysite", "static")
