@@ -11,13 +11,29 @@ from django.views import View
 from django.views.generic import TemplateView, DetailView, UpdateView, DeleteView, ListView, CreateView
 from django.core.files.storage import FileSystemStorage
 from django_filters.views import FilterView
-from cinema_base import filters
 from django.db.models import Q
+from rest_framework import viewsets
 
-from cinema_base.models import Film, Studio, Actor
+from cinema_base.models import Film, Studio, Actor, Genre
+from cinema_base import filters
+from cinema_base import serializers
 
+class GenreAPI(viewsets.ModelViewSet):
+    queryset = Genre.objects.all()
+    serializer_class = serializers.Genre
 
-# Create your views here.
+class ActorAPI(viewsets.ModelViewSet):
+    queryset = Actor.objects.all()
+    serializer_class = serializers.Actor
+
+class StudioAPI(viewsets.ModelViewSet):
+    queryset = Studio.objects.all()
+    serializer_class = serializers.Studio
+
+class FilmAPI(viewsets.ModelViewSet):
+    queryset = Film.objects.all()
+    serializer_class = serializers.Film
+
 class FirstView(View):
     def get(self, request):
         return HttpResponse('Привет джанго')

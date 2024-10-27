@@ -16,11 +16,22 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from rest_framework.routers import DefaultRouter
 
 from cinema_base import views
 
+router = DefaultRouter()
+
+router.register('actors_api', views.ActorAPI, basename='actors')
+router.register('films_api', views.FilmAPI, basename='films')
+router.register('genres_api', views.GenreAPI, basename='genres')
+router.register('studios_api', views.StudioAPI, basename='studio')
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('schema/', SpectacularAPIView.as_view(), name='schema'),
+    path('swagger/', SpectacularSwaggerView.as_view(url_name='schema')),
     path('first_view/', views.FirstView.as_view(), name='first_view'),
     # path('films/', views.FilmsListTemplateView.as_view(), name='list_view'),
     # path('films_list/', views.FilmsList.as_view(), name='films_list'),
@@ -35,4 +46,4 @@ urlpatterns = [
     path('actor_create/', views.ActorCreate.as_view(), name='actor_create'),
     path('actors/<int:pk>/update/', views.ActorUpdate.as_view(), name='actor_update'),
     path('actors/<int:pk>/delete/', views.ActorDelete.as_view(), name='actor_delete'),
-]
+] + router.urls

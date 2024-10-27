@@ -150,7 +150,7 @@ class Film(models.Model):
     #poster = models.CharField(verbose_name='Постер', max_length=255, default='постер')
     release = models.DateField('Дата выхода', default='1900-01-01')
     #release = models.CharField(verbose_name='Постер', max_length=255, default='дата')
-    genres = models.ManyToManyField(Genre, verbose_name='Жанры', related_name='films', blank=True)
+    genres = models.ManyToManyField(Genre, verbose_name='Жанры', related_name='films', blank=True, null=True)
     #genres = models.CharField(verbose_name='Жанры', max_length=255, default='женрес')
     studio = models.ForeignKey(Studio, verbose_name='Студия', blank=True, null=True, related_name='studio', on_delete=models.SET_NULL)
     #studio = models.CharField(verbose_name='Студия', max_length=255, default='студия')
