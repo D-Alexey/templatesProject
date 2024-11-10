@@ -1,0 +1,11 @@
+{% extends '../base.html' %}
+{% block title %} Добавить {% endblock %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+    <div class="container-update">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="btn btn-outline-warning mt-3" type="submit">Отправить</button>
+    </div>
+</form>
+{% endblock %}

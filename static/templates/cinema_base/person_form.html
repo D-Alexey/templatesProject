@@ -6,13 +6,18 @@
     <div class="top-line">
       <h1 class="title">Редактировать</h1>
       <div class="container-buttons ">
-        <button class="button-add-film" type="submit">Сохранить изменения</button>
-        <p><a class="cancel" href="{% url 'actors_list' %}">Отмена</a></p>
+        <button class="button-add-film" type="submit">+</button>
+        <p><a class="cancel" href="{% url 'films_list' %}">Отмена</a></p>
       </div>
     </div>
 
   <div class="film-body update-body">
-    <img src="{% static actor.photo %}" alt="photo">
+<!--    <img src="{% static actor.photo %}" alt="photo">-->
+      {% if actor.photo %}
+      <p><img src="{% static actor.photo %}">
+      {% else %}
+      <p><img src="{% static default_image %}">
+      {% endif %}
     <div class="container-update">
       <div>
             {% csrf_token %}

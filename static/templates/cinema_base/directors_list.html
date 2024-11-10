@@ -2,7 +2,6 @@
 {% load static %}
 {% block title %} Актеры {% endblock %}
 
-
 <div class="main-container">
 
   {% block sidebar %}
@@ -16,7 +15,7 @@
             <p style="color: var(--color-sandy); background-color: var(--color-dark);"> {{field}} </p>
           </div>
         {% endfor %}
-        <a href="{% url 'actors_list' %}"} > Сбросить </a>
+        <a href="{% url 'directors_list' %}"} > Сбросить </a>
         <button type="submit">Поиск</button>
       </div>
       </form>
@@ -26,7 +25,7 @@
     <div class="top-line">
       <form action="{% url 'person_create' %}">
         <div>
-          <h1 class="title">Актеры
+          <h1 class="title">Режиссеры
           <button type="submit" class="button-add-film">+</button></h1>
         </div>
       </form>
@@ -38,7 +37,7 @@
             <div class="container-buttons">
               <div><a href="{% url 'person_update' person.pk%}">Редактировать |</a></br></div>
               <div><a href="{% url 'person_delete' person.pk%}">Удалить |</a></br></div>
-              <div><a href="{% url 'actors_list' %}">Назад</a></div>
+              <div><a href="{% url 'directors_list' %}">Назад</a></div>
             </div> 
             {% if person.photo %}
             <p><img src="{% static person.photo %}">

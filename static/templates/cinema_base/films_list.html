@@ -4,51 +4,75 @@
 
 
 <div class="main-container">
-
   {% block sidebar %}
   {% load static %}
-      <form method="get">
-        <div class="film-body search">
-        {% csrf_token %}
-        {% for field in filter.form %}
-          <div class="searchy">
-            {{ field.label_tag }}
-            <p style="color: var(--color-sandy); background-color: var(--color-dark);"> {{field}} </p>
-          </div>
-        {% endfor %}
-        <a href="{% url 'films_list' %}"} > Сбросить </a>
-        <button type="submit">Поиск</button>
+  <form method="get">
+    <div class="film-body search">
+      {% csrf_token %}
+      {% for field in filter.form %}
+      <div class="searchy">
+        {{ field.label_tag }}
+        <p style="color: var(--color-sandy); background-color: var(--color-dark);"> {{field}} </p>
       </div>
-      </form>
+      {% endfor %}
+      <a href="{% url 'films_list' %}"} > Сбросить </a>
+      <button type="submit">Поиск</button>
+    </div>
+  </form>
   {% endblock %}
 
   {% block content %}
     <div class="top-line">
-      <h1 class="title">Фильмы</h1>
       <form action="{% url 'film_create' %}">
-        <button type="submit" class="button-add-film">Добавить фильм</button>
+        <div>
+          <h1 class="title">Фильмы
+          <button type="submit" class="button-add-film">+</button></h1>
+        </div>
       </form>
     </div>
     <div class="container">
       {% for film in films %}
         <div class="film-body">
-          <img src="{% static film.poster %}" alt="photo">
+          <div>
+            <div class="container-buttons">
+              <div><a href="{% url 'film_update' film.pk%}">Редактировать |</a></br></div>
+              <div><a href="{% url 'film_delete' film.pk%}">Удалить |</a></br></div>
+              <div><a href="{% url 'films_list' %}">Назад</a></div>
+            </div> 
+            {% if film.poster %}
+            <p><img src="{% static film.poster %}">
+            {% else %}
+            <p><img src="{% static default_image %}">
+            {% endif %}
+          </div>
           <div class="film-info">
-            <h2 class="film-title"><a href="{% url 'film_detail' film.pk %}">{{ film.title }}</a>    <div class="rating">{{film.rating}}</div></h2>
+            <h2 class="film-title">
+              <a href="{% url 'film_detail' film.pk %}">{{ film.title }}</a>    
+              <div class="rating">{{film.rating}}</div>
+            </h2>
             <p>Премьера {{ film.release }}</p>
             <p>{{ film.slogan|default_if_none:"-----" }} </p>
             <p>Жанры: {{ film.genres.all|join:" " }}</p>
-            <p>В главных ролях: {{ film.male_actor|default_if_none:"неизвестно" }}, {{ film.female_actor|default_if_none:"неизвестно"  }} </p>
-            <p> {{ film.studio |default_if_none:"неизвестно" }} </p>
+            <p>Режиссёр: {{ film.directors.all|join:" "}}</p>
+
+            <p>В главных ролях:
+              {% if film.male_actor.pk %}
+                <a href="{% url 'person_detail' film.male_actor.pk%}">{{ film.male_actor }}</a>
+              {% else %}
+                <span>Неизвестно</span>
+              {% endif %}
+
+              {% if film.female_actor.pk %}
+                <a href="{% url 'person_detail' film.female_actor.pk%}">{{ film.female_actor }}</a>
+              {% else %}
+                <span>Неизвестно</span>
+              {% endif %}
+            </p>
+            <p> {{ film.studio |default_if_none:"Студия неизвестна" }} </p>
             <p>Длительность: {{ film.duration }} </p>
             <p>Возрастной рейтинг: {{ film.age }}</p>
             <p>id: {{ film.pk }}</p>
-          </div>      
-          <div class="container-buttons">
-            <div><a href="{% url 'film_update' film.pk%}">Редактировать</a></br></div>
-            <div><a href="{% url 'film_delete' film.pk%}">Удалить</a></br></div>
-            <div><a href="{% url 'films_list' %}">Назад</a></div>
-          </div> 
+          </div>
         </div>
       {% endfor %}
     </div>

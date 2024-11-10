@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 from django.conf.global_settings import STATIC_ROOT
+from django.contrib.auth import user_logged_in
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -141,12 +142,21 @@ DJANGO_SETTINGS_MODULE = 'modelsProject.cinema_base.settings'
 
 #STATIC_URL = 'E:/ITCODE/ITCODE_BACK/modelsProject/static/'
 STATIC_URL = 'static/'
-STATICFILES_DIRS = (
-    'static',
-)
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'templates')
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+# STATIC_URL = 'static/'
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, "templates"),
+# )
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static', 'templates')
 #
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, "static"),
 #     '/var/www/static/',
 # )
+
+DEFAULT_USER_IMAGE = 'media/images/avatars/default_avatar.jpg'
+DEFAULT_POSTER_IMAGE = 'media/images/posters/default_poster.jpg'
+
+AUTH_USER_MODEL = 'cinema_base.User'

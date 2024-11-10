@@ -14,8 +14,8 @@ QUALITY = [
     ('Low_rating', 'Низкая')
 ]
 
-class Actor(django_filters.FilterSet):
-    #actor = django_filters.CharFilter(method='actor_filter', label='Актер')
+class Person(django_filters.FilterSet):
+    #person = django_filters.CharFilter(method='actor_filter', label='Актер')
     first_name = django_filters.CharFilter(lookup_expr='iregex', label='Имя')
     surname = django_filters.CharFilter(lookup_expr='iregex', label='Фамилия')
     year = django_filters.RangeFilter(field_name='birth_date__year', label='Год рождения от и до')
@@ -42,26 +42,12 @@ class Film(django_filters.FilterSet):
              return queryset.filter(rating__lt=66, rating__gt=33)
         if value == QUALITY[2][0]:
              return queryset.filter(rating__lt=33)
-
         return queryset
 
     def genre_filter(self, queryset, name, value):
         for gener in value:
             queryset = queryset.filter(genres=gener)
-
         return queryset
-
-        # print('2')
-        # crit = Q()
-        # for term in value:
-        #     crit &= Q(getgenres__iregex=term)
-        # return queryset.filter(crit).distinct()
-
-        # for film in queryset:
-        #     print(film.title)
-        #     print(list(film.genres.values_list('name',flat=True)))
-        #     film_genres = list(film.genres.values_list('name',flat=True))
-        #     print(value[0])
 
     def actor_filter(self, queryset, name, value):
         crit = Q()

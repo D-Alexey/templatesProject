@@ -13,38 +13,38 @@ from cinema_base.models import Studio
 class CinemaBaseTestCase(TestCase):
     def setUp(self):
         self.film = factories.FilmFactory()
-        self.actor = factories.ActorFactory()
+        self.person = factories.ActorFactory()
 
     def test_get_actors_list(self):
         url = reverse('actors_list')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['actors'].count(), models.Actor.objects.count())
+        self.assertEqual(response.context['actors'].count(), models.Person.objects.count())
 
     def test_get_detail_actor(self):
-        url = reverse('actor_detail', kwargs={'pk':self.actor.pk})
+        url = reverse('actor_detail', kwargs={'pk':self.person.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_update_actor(self):
-        url = reverse('actor_update', kwargs={'pk': self.actor.pk})
-        old_surname = self.actor.surname
-        old_birth_date = self.actor.birth_date
+        url = reverse('actor_update', kwargs={'pk': self.person.pk})
+        old_surname = self.person.surname
+        old_birth_date = self.person.birth_date
         response = self.client.post(url, {
-            'photo' : self.actor.photo,
+            'photo' : self.person.photo,
             'first_name' : 'новое имя',
             'surname' : 'новая фамилия',
             'birth_date' : date.today(),
-            'gender': self.actor.gender
+            'gender': self.person.gender
         })
-        self.actor.refresh_from_db()
-        self.assertNotEqual(old_surname, self.actor.surname)
-        self.assertNotEqual(old_birth_date, self.actor.birth_date)
+        self.person.refresh_from_db()
+        self.assertNotEqual(old_surname, self.person.surname)
+        self.assertNotEqual(old_birth_date, self.person.birth_date)
         self.assertEqual(response.status_code, 302)
 
 
     def test_create_actor(self):
-        old_actors_count = models.Actor.objects.count()
+        old_actors_count = models.Person.objects.count()
         url = reverse('actor_create')
         new_actor = factories.ActorFactory()
         response = self.client.put(url, {
@@ -54,14 +54,14 @@ class CinemaBaseTestCase(TestCase):
             'birth_date': new_actor.birth_date,
             'gender': 'male'
         }, follow=True)
-        self.assertLess(old_actors_count, models.Actor.objects.count())
+        self.assertLess(old_actors_count, models.Person.objects.count())
 
     def test_delete_actor(self):
-        url = reverse('actor_delete', kwargs={'pk': self.actor.pk})
-        old_actor_count = models.Actor.objects.count()
+        url = reverse('actor_delete', kwargs={'pk': self.person.pk})
+        old_actor_count = models.Person.objects.count()
         response = self.client.delete(url)
         self.assertEqual(response.status_code, 302)
-        self.assertGreater(old_actor_count, models.Actor.objects.count())
+        self.assertGreater(old_actor_count, models.Person.objects.count())
 
     def test_get_film_list(self):
         url = reverse('films_list')

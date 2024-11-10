@@ -33,7 +33,7 @@ class ActorFactory(factory.django.DjangoModelFactory):
     #gender = genders[random.randint(0,1)]
     #print('actor birth date: ' + str(birth_date))
     class Meta:
-        model = models.Actor
+        model = models.Person
 
 class FilmFactory(factory.django.DjangoModelFactory):
     title = 'тест тайтл'

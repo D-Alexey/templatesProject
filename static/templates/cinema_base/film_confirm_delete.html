@@ -5,7 +5,7 @@
   <h1>Удалить {{ film.title }}</h1>
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <button class="button-add-film" type="submit">Удалить</button>
+    <button type="submit">Подтвердить</button>
     <p class="cancel"><a href="{% url 'film_detail' film.pk %}">Отмена</a></p>
   </form>
 </div>

@@ -1,0 +1,60 @@
+{% extends '../base.html' %}
+
+{% block content %}
+{% load static %}
+<div>
+  <form method="POST" enctype="multipart/form-data">
+    <h1>{{ user.username }}</h1>
+    {% csrf_token %}
+    {% if user.photo %}
+    <p><img src="{% static user.photo %}">
+    {% else %}
+    <p><img src="{% static default_image %}">
+    {% endif %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+  </form>
+  <div>
+    <a href="{% url 'user_delete' user.pk %}">Удалить</a>
+  </div>
+  <div class="container">
+  {% for film in films %}
+    <div class="film-body">
+      <div>
+        <div class="container-buttons">
+          <div><a href="{% url 'film_update' film.pk%}">Редактировать</a></br></div>
+          <div><a href="{% url 'film_delete' film.pk%}">Удалить</a></br></div>
+        </div>
+        {% if film.poster %}
+        <p><img src="{% static film.poster %}">
+        {% else %}
+        <p><img src="{% static default_image %}">
+        {% endif %}
+        <div class="notes-container">
+          {% for note in notes %}
+          {% if note.film_id == film.pk %}
+          <div class="note">
+          <div class="note-rating">{{ note.rating }}</div>
+          <div class="note-text">{{ note.note }}</div>
+          </div>
+          {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+      <div class="film-info">
+        <h2 class="film-title"><a href="{% url 'film_detail' film.pk %}">{{ film.title }}</a>    <div class="rating">{{film.rating}}</div></h2>
+        <p>Премьера {{ film.release }}</p>
+        <p>{{ film.slogan|default_if_none:"-----" }} </p>
+        <p>Жанры: {{ film.genres.all|join:" " }}</p>
+        <p>Режиссёр: {{ film.directors.all|join:" "}}</p>
+        <p>В главных ролях: {{ film.male_actor|default_if_none:"неизвестно" }}, {{ film.female_actor|default_if_none:"неизвестно"  }} </p>
+        <p> {{ film.studio |default_if_none:"Студия неизвестна" }} </p>
+        <p>Длительность: {{ film.duration }} </p>
+        <p>Возрастной рейтинг: {{ film.age }}</p>
+        <p>id: {{ film.pk }}</p>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -3,21 +3,27 @@
 {% block content %}
 {% load static %}
 <div class="container">
-    <h1 class="title">{{ actor.first_name }} {{ actor.surname }}</h1>
+    <h1 class="title">{{ person.first_name }} {{ person.surname }}</h1>
     <div class="container-buttons">
     </div>
     <div class="film-body">
-      <img src="{% static actor.photo %}" alt="photo">
-          <div class="film-info">
-            <h2 class="film-title">{{ actor.first_name }} {{ actor.surname }}<div class="rating">{{film.rating}}</div></h2>
-            <p>Дата рождения {{ actor.birth_date }}</p>
-            <p>Пол: {{ actor.gender }}</p>
-            <p>id: {{ actor.pk }}</p>
-          </div>
-          <div class="container-buttons">
-            <div><a href="{% url 'actor_update' actor.pk%}">Редактировать</a></br></div>
-            <div><a href="{% url 'actor_delete' actor.pk%}">Удалить</a></br></div>
-            <div><a href="{% url 'films_list' %}">Главная</a></div>
+<!--      <img src="{% static actor.photo %}" alt="photo">-->
+        {% if person.photo %}
+        <p><img src="{% static person.photo %}">
+        {% else %}
+        <p><img src="{% static default_image %}">
+        {% endif %}
+      <div class="film-info">
+          <h2 class="film-title">{{ person.first_name }} {{ person.surname }}<div class="rating">{{film.rating}}</div></h2>
+          <p>Дата рождения: {{ person.birth_date }}</p>
+          <p>Профессия: {{ person.getprofessions}}</p>
+          <p>Пол: {{ person.gender }}</p>
+          <p>id: {{ person.pk }}</p>
+      </div>
+      <div class="container-buttons">
+          <div><a href="{% url 'person_update' person.pk%}">Редактировать</a></br></div>
+          <div><a href="{% url 'person_delete' person.pk%}">Удалить</a></br></div>
+          <div><a href="{% url 'films_list' %}">Главная</a></div>
       </div>
     </div>
     <div class="container">
@@ -29,6 +35,7 @@
             <p>Премьера {{ film.release }}</p>
             <p>{{ film.slogan|default_if_none:"-----" }} </p>
             <p>Жанры: {{ film.genres.all|join:" " }}</p>
+            <p>Режиссёр: {{ film.directors.all|join:" "}}</p>
             <p>В главных ролях: {{ film.male_actor|default_if_none:"неизвестно" }}, {{ film.female_actor|default_if_none:"неизвестно"  }} </p>
             <p> {{ film.studio |default_if_none:"неизвестно" }} </p>
             <p>Длительность: {{ film.duration }} </p>

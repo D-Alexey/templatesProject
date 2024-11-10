@@ -23,7 +23,7 @@ from cinema_base import views
 
 router = DefaultRouter()
 
-router.register('actors_api', views.ActorAPI, basename='actors')
+router.register('persons_api', views.PersonAPI, basename='persons')
 router.register('films_api', views.FilmAPI, basename='films')
 router.register('genres_api', views.GenreAPI, basename='genres')
 router.register('studios_api', views.StudioAPI, basename='studio')
@@ -33,17 +33,23 @@ urlpatterns = [
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('swagger/', SpectacularSwaggerView.as_view(url_name='schema')),
     path('first_view/', views.FirstView.as_view(), name='first_view'),
-    # path('films/', views.FilmsListTemplateView.as_view(), name='list_view'),
-    # path('films_list/', views.FilmsList.as_view(), name='films_list'),
     path('films/', views.FilmsList.as_view(), name='films_list'),
-    path('gosling/', views.GoslingFilms.as_view(), name='gosling_films'),
     path('films/<int:pk>/', views.FilmDetail.as_view(), name='film_detail'),
     path('film_create/', views.FilmCreate.as_view(), name='film_create'),
     path('films/<int:pk>/update/', views.FilmsUpdate.as_view(), name='film_update'),
     path('films/<int:pk>/delete/', views.FilmsDelete.as_view(), name='film_delete'),
     path('actors/', views.ActorsList.as_view(), name='actors_list'),
-    path('actor/<int:pk>/', views.ActorDetail.as_view(), name='actor_detail'),
-    path('actor_create/', views.ActorCreate.as_view(), name='actor_create'),
-    path('actors/<int:pk>/update/', views.ActorUpdate.as_view(), name='actor_update'),
-    path('actors/<int:pk>/delete/', views.ActorDelete.as_view(), name='actor_delete'),
+    path('directors/', views.DirectorsList.as_view(), name='directors_list'),
+    path('person/<int:pk>/', views.PersonDetail.as_view(), name='person_detail'),
+    path('person_create/', views.PersonCreate.as_view(), name='person_create'),
+    path('persons/<int:pk>/update/', views.PersonUpdate.as_view(), name='person_update'),
+    path('persons/<int:pk>/delete/', views.PersonDelete.as_view(), name='person_delete'),
+    path('register/', views.RegisterUser.as_view(), name='register'),
+    path('login/', views.LoginUser.as_view(), name='login'),
+    path('logout/', views.logout_user, name='logout'),
+    path('profile/', views.ProfileUser.as_view(), name='profile'),
+    path('user_delete/<int:pk>/', views.UserDelete.as_view(), name='user_delete'),
+    path('note_create/<int:pk>', views.NoteCreate.as_view(), name='note_create'),
+    path('note_delete/<int:pk>', views.NoteDelete.as_view(), name='note_delete'),
+    path('note_update/<int:pk>', views.NoteUpdate.as_view(), name='note_update'),
 ] + router.urls

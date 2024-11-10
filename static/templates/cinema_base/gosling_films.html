@@ -18,6 +18,7 @@
               <p>Премьера {{ film.release }}</p>
               <p>{{ film.slogan|default_if_none:"-----" }} </p>
               <p>Жанры: {{ film.genres.all|join:" " }}</p>
+              <p>Режиссёр: {{ film.directors.all|join:" "}}</p>
               <p>В главных ролях: {{ film.male_actor|default_if_none:"неизвестно" }}, {{ film.female_actor|default_if_none:"неизвестно"  }} </p>
               <p> {{ film.studio |default_if_none:"неизвестно" }} </p>
               <p>Длительность: {{ film.duration }} </p>

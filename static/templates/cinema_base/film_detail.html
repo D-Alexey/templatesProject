@@ -8,24 +8,50 @@
         <div><a href="{% url 'film_update' film.pk%}">Редактировать</a></br></div>
         <div><a href="{% url 'film_delete' film.pk%}">Удалить</a></br></div>
         <div><a href="{% url 'films_list' %}">Назад</a></div>
-    </div> 
-  <div class="film-body">
-    <img src="{% static film.poster %}" alt="photo">
-    <div class="film-info">
-      <p>Премьера {{ film.release }}</p>
-      <p> {{ film.slogan }} </p>
-      <p class="card-text">Жанры {{ film.getgenres }}</p>
-      <p>В главных ролях: {{ film.male_actor}}, {{ film.female_actor }} </p>
-      <p> {{ film.studio }} </p>
-      <p>Длительность: {{ film.duration }} </p>
-      <p>Возрастной рейтинг: {{ film.age }}</p>
-      <p>id: {{ film.pk }}</p>
     </div>
-    <div class="container-buttons detail">
-    </div>
+    <div class="film-body">
+        {% if film.poster %}
+        <p><img src="{% static film.poster %}">
+        {% else %}
+        <p><img src="{% static default_image %}">
+        {% endif %}
+        <div class="film-info">
+            <p>Премьера {{ film.release }}</p>
+            <p> {{ film.slogan }} </p>
+            <p class="card-text">Жанры {{ film.getgenres }}</p>
+            <p>Режиссёр: {{ film.directors.all|join:" "}}</p>
+            <p>В главных ролях: {{ film.male_actor}}, {{ film.female_actor }} </p>
+            <p>Студия: {{ film.studio |default_if_none:"Неизвестно" }} </p>
+            <p>Длительность: {{ film.duration }} </p>
+            <p>Возрастной рейтинг: {{ film.age }}</p>
+            <p>id: {{ film.pk }}</p>
+        </div>
+    <div class="container-buttons detail"></div>
   </div>
 </div>
-<div class="related_films">
-  
+<div class="">
+    <form method="POST" enctype="multipart/form-data" action="{% url 'note_create' film.pk %}">
+        {% csrf_token %}
+        <button type="submit">Добавить комментарий</button>
+    </form>
+    <div class="container">
+    {% for note in notes %}
+        <div class="note">
+            <div class="note-rating">{{ note.rating }}</div>
+            {% for user in users %}
+            {% if user.pk == note.user_id %}
+            <div>{{ user.username }}:</div>
+            {% endif %}
+            {% endfor %}
+            <div class="note-text">{{ note.note }}</div>
+            <div>
+                {% if note.user_id == user.id or user.is_superuser %}
+                <a href="{% url 'note_delete' note.pk %}">Удалить</a>
+                <a href="{% url 'note_update' note.pk %}">Редактировать</a>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 </div>
 {% endblock %}

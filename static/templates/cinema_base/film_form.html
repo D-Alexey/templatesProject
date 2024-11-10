@@ -2,33 +2,37 @@
 {% block title %} Редактировать {% endblock %}
 {% block content %}
 {% load static %}
-  <form method="POST" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     <div class="top-line">
-      <h1 class="title">Редактировать {{ film.title }}</h1>
-      <div class="container-buttons ">
-        <button class="button-add-film" type="submit">Сохранить изменения</button>
-        <p><a class="cancel" href="{% url 'film_detail' film.pk %}">Отмена</a></p>
-      </div>
-    </div>
-
-  <div class="film-body update-body">
-    <img src="{% static film.poster %}" alt="photo">
-    <div class="container-update">
-      <div>
-            {% csrf_token %}
-            {% for field in form %}
-              <div class="form-group">
-                  {{field.label_tag}}
-                  <div>{{field}}</div>
-                  {% if field.errors%}
-                  {% for error in field.errors %}
-                    <div> {{error}} </div>
-                  {% endfor %}
-                  {% endif %}
-              </div>
-              {% endfor %}
+        <h1 class="title">Редактировать {{ film.title }}</h1>
+        <div class="container-buttons ">
+            <button class="button-add-film" type="submit">+</button>
+            <p><a class="cancel" href="{% url 'film_detail' film.pk %}">Отмена</a></p>
         </div>
     </div>
-  </div>
+
+    <div class="film-body update-body">
+        {% if film.poster %}
+        <p><img src="{% static film.poster %}">
+        {% else %}
+        <p><img src="{% static default_image %}">
+        {% endif %}
+        <div class="container-update">
+            <div>
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="form-group">
+                    {{field.label_tag}}
+                    <div>{{field}}</div>
+                    {% if field.errors%}
+                    {% for error in field.errors %}
+                    <div> {{error}} </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
 </form>
 {% endblock %}

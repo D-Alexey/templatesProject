@@ -1,0 +1,16 @@
+{% extends '../base.html' %}
+{% block title %} Удалить {% endblock %}
+{% block content %}
+<div class="film-body">
+  <h1>Удалить</h1>
+  <form method="POST" enctype="multipart/form-data">
+  <div>{{ object.username }}</div>
+  <div>{{ object.pk }}</div>
+    {% csrf_token %}
+    {% if object.pk == user.id %}
+    <button class="" type="submit">Удалить</button>
+    {% endif %}
+    <p class="cancel"><a href="{% url 'films_list' %}">Отмена</a></p>
+  </form>
+</div>
+{% endblock %}
